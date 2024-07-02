@@ -20,8 +20,9 @@ const SignUp = () => {
         const createdAt = result.user?.metadata?.creationTime;
         const user = { email, createdAt:createdAt };
         fetch(
-          "http://localhost:5000/user",
+          "https://coffee-store-server-seven-khaki.vercel.app/user",
           {
+            mode:'cors',
             method: "POST",
             headers: {
               "content-type": "application/json",

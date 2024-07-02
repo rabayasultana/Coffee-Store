@@ -25,7 +25,8 @@ const handleUpdateCoffee = event => {
     console.log(updatedCoffee)
 
     // send data to the server
-    fetch(`http://localhost:5000/coffee/${_id}`, {
+    fetch(`https://coffee-store-server-seven-khaki.vercel.app/coffee/${_id}`, {
+        mode:'cors',
         method: 'PUT',
         headers: {
             'content-type': 'application/json'

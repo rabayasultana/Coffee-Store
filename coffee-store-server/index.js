@@ -1,6 +1,6 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 5000;
@@ -8,6 +8,13 @@ const port = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+
+// // Middleware
+// app.use(cors({
+//   origin: '*'
+// }));
+// app.use(express.json());
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.mwqipy1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -23,12 +30,20 @@ const client = new MongoClient(uri, {
   });
   async function run() {
     try {
-      // Connect the client to the server	(optional starting in v4.7)
     //   await client.connect();
 
         const coffeeCollection = client.db('coffeeDB').collection('coffee');
 
         const userCollection = client.db('coffeeDB').collection('user');
+
+        app.get('/', (req, res) => {
+          res.send('Coffee making server is running')
+      })
+
+      // app.get('/cors', (req, res) => {
+      //   res.set('Access-Control-Allow-Origin', '*');
+      //   res.send("This has CORS enabled 🎈" )
+      //   })
 
 
         app.get('/coffee', async(req, res) => {
@@ -116,10 +131,9 @@ const client = new MongoClient(uri, {
 
 
       // Send a ping to confirm a successful connection
-      await client.db("admin").command({ ping: 1 });
-      console.log("Pinged your deployment. You successfully connected to MongoDB!");
+      // await client.db("admin").command({ ping: 1 });
+      // console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
-      // Ensures that the client will close when you finish/error
     //   await client.close();
     }
   }

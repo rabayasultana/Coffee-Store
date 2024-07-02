@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const CoffeeCard = ({coffee, coffees, setCoffees}) => {
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
   const { _id, name, quantity, supplier, taste, category, details, photo } =
     coffee;
 
@@ -17,9 +17,13 @@ const CoffeeCard = ({coffee, coffees, setCoffees}) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/coffee/${_id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://coffee-store-server-seven-khaki.vercel.app/coffee/${_id}`,
+          {
+            mode:'cors',
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
@@ -29,8 +33,8 @@ const CoffeeCard = ({coffee, coffees, setCoffees}) => {
                 text: "Your coffee has been deleted.",
                 icon: "success",
               });
-              const remaining = coffees.filter(cof => cof._id !== _id);
-              setCoffees(remaining)
+              const remaining = coffees.filter((cof) => cof._id !== _id);
+              setCoffees(remaining);
             }
           });
       }
